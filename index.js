@@ -11,8 +11,8 @@ app.post('/api/webhook/:room', (req, res) => {
     if (room) {
         var result = `${req.body.repository.name}/${req.body.ref}\n` +
             `${req.body.commits[0].url}\n` +
-            `Push by ${req.body.pusher.username}\n\n` +
-            `${req.body.commits[0].message}`;
+            `Push by ${req.body.pusher.username || req.body.pusher.name}\n\n` +
+            `${req.body.commits[req.body.commits.length - 1].message}`;
 
         console.log(result);
         sendMessage(room, result.trim());
