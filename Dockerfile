@@ -16,4 +16,5 @@ RUN npm install
 COPY . .
 
 EXPOSE 9203
+EXPOSE 9204
 CMD [ "npm", "start" ]
