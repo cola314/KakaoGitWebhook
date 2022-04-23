@@ -4,6 +4,7 @@ FROM node:14
 ENV SSL_KEY_FILE    /certificate/private.key
 ENV CERT_FILE       /certificate/certificate.crt
 ENV CA_BUNDLE_FILE  /certificate/ca_bundle.crt
+ENV USE_HTTPS       0
 
 # 앱 디렉터리 생성
 WORKDIR /usr/src/app
