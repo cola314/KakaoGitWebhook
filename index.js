@@ -1,17 +1,17 @@
-const https = require('https')
-const express = require('express')
-const app = express()
-const request = require('request')
-const path = require('path')
-const fs = require('fs')
+const https = require('https');
+const express = require('express');
+const app = express();
+const request = require('request');
+const path = require('path');
+const fs = require('fs');
 
-const PORT = 9203
-const HTTPS_PORT = 9204
+const PORT = 9203;
+const HTTPS_PORT = 9204;
 
 const options = {
   key: fs.readFileSync(path.join(__dirname, 'certificate/private.key')),
   cert: fs.readFileSync(path.join(__dirname, 'certificate/certificate.crt')),
-  ca: fs.readFileSync('certificate/ca_bundle.crt')
+  ca: fs.readFileSync('certificate/ca_bundle.crt'),
 };
 
 app.use(express.json());
@@ -20,7 +20,8 @@ app.post('/api/webhook/:room', (req, res) => {
   const room = req.params.room;
 
   if (room) {
-    var result = `${req.body.repository.name}/${req.body.ref}\n` +
+    var result =
+      `${req.body.repository.name}/${req.body.ref}\n` +
       `${req.body.commits[req.body.commits.length - 1].url}\n` +
       `Push by ${req.body.pusher.username || req.body.pusher.name}\n\n` +
       `${req.body.commits[req.body.commits.length - 1].message}`;
@@ -32,28 +33,28 @@ app.post('/api/webhook/:room', (req, res) => {
   }
 
   return res.sendStatus(400);
-})
+});
 
 const sendMessage = (room, message) => {
   const options = {
     uri: 'http://cpplove.iptime.org:9200/send',
     method: 'POST',
     body: {
-      password: "4321",
+      password: '4321',
       room: room,
-      message: message
+      message: message,
     },
-    json: true
-  }
+    json: true,
+  };
   request.post(options, function (error, response, body) {
     //post callback
   });
-}
+};
 
 app.listen(PORT, () => {
-  console.log(`app listening at http://localhost:${PORT}`)
-})
+  console.log(`app listening at http://localhost:${PORT}`);
+});
 
 https.createServer(options, app).listen(HTTPS_PORT, () => {
-  console.log(`app listening at https://localhost:${HTTPS_PORT}`)
-})
+  console.log(`app listening at https://localhost:${HTTPS_PORT}`);
+});
