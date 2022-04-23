@@ -3,13 +3,12 @@ import https from 'https';
 import express from 'express';
 import { parse } from './message-parser';
 import { sendMessage } from './message-sender';
+import * as config from './config';
 
 const app = express();
 
 const PORT = 9203;
 const HTTPS_PORT = 9204;
-
-const useHttps = !!process.env.USE_HTTPS;
 
 app.use(express.json());
 
@@ -32,7 +31,7 @@ app.listen(PORT, () => {
   console.log(`app listening at http://localhost:${PORT}`);
 });
 
-if (useHttps) {
+if (config.USE_HTTPS) {
   const options = {
     key: fs.readFileSync(process.env.SSL_KEY_FILE ?? 'certificate/private.key'),
     cert: fs.readFileSync(
