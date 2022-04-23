@@ -8,6 +8,9 @@ ENV CERT_FILE       /certificate/certificate.crt
 ENV CA_BUNDLE_FILE  /certificate/ca_bundle.crt
 ENV USE_HTTPS       0
 
+ENV KAKAO_BOT_SERVER_API=<KAKAO_BOT_API>
+ENV KAKAO_BOT_API_KEY=<API_KEY>
+
 # 앱 디렉터리 생성
 WORKDIR /usr/src/app
 

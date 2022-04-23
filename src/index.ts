@@ -33,15 +33,10 @@ app.listen(PORT, () => {
 
 if (config.USE_HTTPS) {
   const options = {
-    key: fs.readFileSync(process.env.SSL_KEY_FILE ?? 'certificate/private.key'),
-    cert: fs.readFileSync(
-      process.env.CERT_FILE ?? 'certificate/certificate.crt',
-    ),
-    ca: fs.readFileSync(
-      process.env.CA_BUNDLE_FILE ?? 'certificate/ca_bundle.crt',
-    ),
+    key: fs.readFileSync(config.SSL_KEY_FILE),
+    cert: fs.readFileSync(config.CERT_FILE),
+    ca: fs.readFileSync(config.CA_BUNDLE_FILE),
   };
-
   https.createServer(options, app).listen(HTTPS_PORT, () => {
     console.log(`app listening at https://localhost:${HTTPS_PORT}`);
   });
