@@ -10,8 +10,8 @@
   "author": "cola",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "request": "^2.88.2"
+    "axios": "^0.26.1",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "jest": "^27.5.1"
