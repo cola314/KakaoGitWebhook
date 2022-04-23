@@ -1,10 +1,10 @@
 const https = require('https');
 const express = require('express');
 const app = express();
-const request = require('request');
 const path = require('path');
 const fs = require('fs');
 const { parse } = require('./message-parser');
+const { sendMessage } = require('./message-sender');
 
 const PORT = 9203;
 const HTTPS_PORT = 9204;
@@ -31,22 +31,6 @@ app.post('/api/webhook/:room', (req, res) => {
 
   return res.sendStatus(400);
 });
-
-const sendMessage = (room, message) => {
-  const options = {
-    uri: 'http://cpplove.iptime.org:9200/send',
-    method: 'POST',
-    body: {
-      password: '4321',
-      room: room,
-      message: message,
-    },
-    json: true,
-  };
-  request.post(options, function (error, response, body) {
-    //post callback
-  });
-};
 
 app.listen(PORT, () => {
   console.log(`app listening at http://localhost:${PORT}`);
