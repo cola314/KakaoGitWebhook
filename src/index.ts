@@ -1,10 +1,11 @@
-const https = require('https');
-const express = require('express');
+import fs from 'fs';
+import https from 'https';
+import express from 'express';
+import path from 'path';
+import { parse } from './message-parser';
+import { sendMessage } from './message-sender';
+
 const app = express();
-const path = require('path');
-const fs = require('fs');
-const { parse } = require('./message-parser');
-const { sendMessage } = require('./message-sender');
 
 const PORT = 9203;
 const HTTPS_PORT = 9204;
