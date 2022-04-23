@@ -4,6 +4,7 @@ const app = express();
 const request = require('request');
 const path = require('path');
 const fs = require('fs');
+const { parse } = require('./message-parser');
 
 const PORT = 9203;
 const HTTPS_PORT = 9204;
@@ -20,11 +21,7 @@ app.post('/api/webhook/:room', (req, res) => {
   const room = req.params.room;
 
   if (room) {
-    var result =
-      `${req.body.repository.name}/${req.body.ref}\n` +
-      `${req.body.commits[req.body.commits.length - 1].url}\n` +
-      `Push by ${req.body.pusher.username || req.body.pusher.name}\n\n` +
-      `${req.body.commits[req.body.commits.length - 1].message}`;
+    const result = parse(req.body);
 
     console.log(result);
     sendMessage(room, result.trim());
