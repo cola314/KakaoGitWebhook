@@ -9,13 +9,7 @@ const app = express();
 const PORT = 9203;
 const HTTPS_PORT = 9204;
 
-const options = {
-  key: fs.readFileSync(process.env.SSL_KEY_FILE ?? 'certificate/private.key'),
-  cert: fs.readFileSync(process.env.CERT_FILE ?? 'certificate/certificate.crt'),
-  ca: fs.readFileSync(
-    process.env.CA_BUNDLE_FILE ?? 'certificate/ca_bundle.crt',
-  ),
-};
+const useHttps = !!process.env.USE_HTTPS;
 
 app.use(express.json());
 
@@ -38,6 +32,18 @@ app.listen(PORT, () => {
   console.log(`app listening at http://localhost:${PORT}`);
 });
 
-https.createServer(options, app).listen(HTTPS_PORT, () => {
-  console.log(`app listening at https://localhost:${HTTPS_PORT}`);
-});
+if (useHttps) {
+  const options = {
+    key: fs.readFileSync(process.env.SSL_KEY_FILE ?? 'certificate/private.key'),
+    cert: fs.readFileSync(
+      process.env.CERT_FILE ?? 'certificate/certificate.crt',
+    ),
+    ca: fs.readFileSync(
+      process.env.CA_BUNDLE_FILE ?? 'certificate/ca_bundle.crt',
+    ),
+  };
+
+  https.createServer(options, app).listen(HTTPS_PORT, () => {
+    console.log(`app listening at https://localhost:${HTTPS_PORT}`);
+  });
+}
