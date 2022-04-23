@@ -1,5 +1,5 @@
-const fs = require('fs');
-const { parse } = require('./message-parser');
+import fs from 'fs';
+import { parse } from './message-parser';
 
 const example = fs.readFileSync('test-webhook-message.json').toString();
 const data = JSON.parse(example);
