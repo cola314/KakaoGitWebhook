@@ -1,18 +1,20 @@
-const https = require('https');
-const express = require('express');
+import fs from 'fs';
+import https from 'https';
+import express from 'express';
+import { parse } from './message-parser';
+import { sendMessage } from './message-sender';
+
 const app = express();
-const path = require('path');
-const fs = require('fs');
-const { parse } = require('./message-parser');
-const { sendMessage } = require('./message-sender');
 
 const PORT = 9203;
 const HTTPS_PORT = 9204;
 
 const options = {
-  key: fs.readFileSync(path.join(__dirname, 'certificate/private.key')),
-  cert: fs.readFileSync(path.join(__dirname, 'certificate/certificate.crt')),
-  ca: fs.readFileSync('certificate/ca_bundle.crt'),
+  key: fs.readFileSync(process.env.SSL_KEY_FILE ?? 'certificate/private.key'),
+  cert: fs.readFileSync(process.env.CERT_FILE ?? 'certificate/certificate.crt'),
+  ca: fs.readFileSync(
+    process.env.CA_BUNDLE_FILE ?? 'certificate/ca_bundle.crt',
+  ),
 };
 
 app.use(express.json());
