@@ -1,6 +1,8 @@
 FROM node:14
 
 # 환경변수
+ENV NODE_ENV        production
+
 ENV SSL_KEY_FILE    /certificate/private.key
 ENV CERT_FILE       /certificate/certificate.crt
 ENV CA_BUNDLE_FILE  /certificate/ca_bundle.crt
