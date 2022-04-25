@@ -7,9 +7,6 @@ import * as config from './config';
 
 const app = express();
 
-const PORT = 9203;
-const HTTPS_PORT = 9204;
-
 app.use(express.json());
 
 app.post('/api/webhook/:room', (req, res) => {
@@ -19,16 +16,15 @@ app.post('/api/webhook/:room', (req, res) => {
     const result = parse(req.body);
 
     console.log(result);
-    sendMessage(room, result.trim());
+    sendMessage(room, result);
 
     return res.sendStatus(200);
   }
-
   return res.sendStatus(400);
 });
 
-app.listen(PORT, () => {
-  console.log(`app listening at http://localhost:${PORT}`);
+app.listen(config.HTTP_PORT, () => {
+  console.log(`app listening at http://localhost:${config.HTTP_PORT}`);
 });
 
 if (config.USE_HTTPS) {
@@ -37,7 +33,7 @@ if (config.USE_HTTPS) {
     cert: fs.readFileSync(config.CERT_FILE),
     ca: fs.readFileSync(config.CA_BUNDLE_FILE),
   };
-  https.createServer(options, app).listen(HTTPS_PORT, () => {
-    console.log(`app listening at https://localhost:${HTTPS_PORT}`);
+  https.createServer(options, app).listen(config.HTTPS_PORT, () => {
+    console.log(`app listening at https://localhost:${config.HTTPS_PORT}`);
   });
 }
