@@ -1,4 +1,4 @@
-FROM node:16 AS build
+FROM node:alpine3.16 AS build
 
 WORKDIR /app
 COPY package*.json ./
@@ -6,7 +6,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM node:16
+FROM node:alpine3.16
 
 # 환경변수
 ENV NODE_ENV        production
