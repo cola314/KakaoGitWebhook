@@ -12,6 +12,6 @@ export function sendMessage(room: string, message: string) {
       //post callback
     })
     .catch(ex => {
-      console.error('error');
+      console.error(ex);
     });
 }

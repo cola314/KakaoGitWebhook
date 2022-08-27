@@ -15,7 +15,7 @@ app.use(express.json({
     }
     
     if (!isValidate(signature, buf.toString('utf-8')))
-      throw new Error('invalid Signature');
+      throw new Error('invalid signature');
   }
 }));
 
